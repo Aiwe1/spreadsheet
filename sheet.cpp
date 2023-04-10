@@ -23,8 +23,9 @@ void Sheet::SetCell(Position pos, std::string text) {
     if (pos.col >= static_cast<int>(sheet_[pos.row].size())) {
         sheet_[pos.row].resize(pos.col + 1);
     }
-
-    sheet_[pos.row][pos.col] = std::make_unique<Cell>(); 
+    if (!sheet_[pos.row][pos.col]) {
+        sheet_[pos.row][pos.col] = std::make_unique<Cell>(*this);
+    }
     sheet_[pos.row][pos.col]->Set(std::move(text));
 }
 
